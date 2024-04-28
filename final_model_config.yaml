@@ -1,0 +1,267 @@
+build_input_shape: 
+- null
+- 28
+- 28
+- 1
+dtype: float32
+layers:
+- class_name: InputLayer
+  config:
+    batch_shape: 
+    - null
+    - 28
+    - 28
+    - 1
+    dtype: float32
+    name: input_layer_18
+    sparse: false
+  module: keras.layers
+  registered_name: null
+- build_config:
+    input_shape: 
+    - null
+    - 28
+    - 28
+    - 1
+  class_name: Conv2D
+  config:
+    activation: relu
+    activity_regularizer: null
+    bias_constraint: null
+    bias_initializer:
+      class_name: Zeros
+      config: {}
+      module: keras.initializers
+      registered_name: null
+    bias_regularizer: null
+    data_format: channels_last
+    dilation_rate: 
+    - 1
+    - 1
+    dtype: float32
+    filters: 32
+    groups: 1
+    kernel_constraint: null
+    kernel_initializer:
+      class_name: GlorotUniform
+      config:
+        seed: null
+      module: keras.initializers
+      registered_name: null
+    kernel_regularizer: null
+    kernel_size: 
+    - 3
+    - 3
+    name: conv2d_53
+    padding: valid
+    strides: 
+    - 1
+    - 1
+    trainable: true
+    use_bias: true
+  module: keras.layers
+  registered_name: null
+- build_config:
+    input_shape: 
+    - null
+    - 26
+    - 26
+    - 32
+  class_name: MaxPooling2D
+  config:
+    data_format: channels_last
+    dtype: float32
+    name: max_pooling2d_36
+    padding: valid
+    pool_size: 
+    - 2
+    - 2
+    strides: 
+    - 2
+    - 2
+    trainable: true
+  module: keras.layers
+  registered_name: null
+- build_config:
+    input_shape: 
+    - null
+    - 13
+    - 13
+    - 32
+  class_name: Conv2D
+  config:
+    activation: relu
+    activity_regularizer: null
+    bias_constraint: null
+    bias_initializer:
+      class_name: Zeros
+      config: {}
+      module: keras.initializers
+      registered_name: null
+    bias_regularizer: null
+    data_format: channels_last
+    dilation_rate: 
+    - 1
+    - 1
+    dtype: float32
+    filters: 64
+    groups: 1
+    kernel_constraint: null
+    kernel_initializer:
+      class_name: GlorotUniform
+      config:
+        seed: null
+      module: keras.initializers
+      registered_name: null
+    kernel_regularizer: null
+    kernel_size: 
+    - 3
+    - 3
+    name: conv2d_54
+    padding: valid
+    strides: 
+    - 1
+    - 1
+    trainable: true
+    use_bias: true
+  module: keras.layers
+  registered_name: null
+- build_config:
+    input_shape: 
+    - null
+    - 11
+    - 11
+    - 64
+  class_name: MaxPooling2D
+  config:
+    data_format: channels_last
+    dtype: float32
+    name: max_pooling2d_37
+    padding: valid
+    pool_size: 
+    - 2
+    - 2
+    strides: 
+    - 2
+    - 2
+    trainable: true
+  module: keras.layers
+  registered_name: null
+- build_config:
+    input_shape: 
+    - null
+    - 5
+    - 5
+    - 64
+  class_name: Conv2D
+  config:
+    activation: relu
+    activity_regularizer: null
+    bias_constraint: null
+    bias_initializer:
+      class_name: Zeros
+      config: {}
+      module: keras.initializers
+      registered_name: null
+    bias_regularizer: null
+    data_format: channels_last
+    dilation_rate: 
+    - 1
+    - 1
+    dtype: float32
+    filters: 64
+    groups: 1
+    kernel_constraint: null
+    kernel_initializer:
+      class_name: GlorotUniform
+      config:
+        seed: null
+      module: keras.initializers
+      registered_name: null
+    kernel_regularizer: null
+    kernel_size: 
+    - 3
+    - 3
+    name: conv2d_55
+    padding: valid
+    strides: 
+    - 1
+    - 1
+    trainable: true
+    use_bias: true
+  module: keras.layers
+  registered_name: null
+- build_config:
+    input_shape: 
+    - null
+    - 3
+    - 3
+    - 64
+  class_name: Flatten
+  config:
+    data_format: channels_last
+    dtype: float32
+    name: flatten_14
+    trainable: true
+  module: keras.layers
+  registered_name: null
+- build_config:
+    input_shape: 
+    - null
+    - 576
+  class_name: Dense
+  config:
+    activation: relu
+    bias_constraint: null
+    bias_initializer:
+      class_name: Zeros
+      config: {}
+      module: keras.initializers
+      registered_name: null
+    bias_regularizer: null
+    dtype: float32
+    kernel_constraint: null
+    kernel_initializer:
+      class_name: GlorotUniform
+      config:
+        seed: null
+      module: keras.initializers
+      registered_name: null
+    kernel_regularizer: null
+    name: dense_28
+    trainable: true
+    units: 64
+    use_bias: true
+  module: keras.layers
+  registered_name: null
+- build_config:
+    input_shape: 
+    - null
+    - 64
+  class_name: Dense
+  config:
+    activation: softmax
+    bias_constraint: null
+    bias_initializer:
+      class_name: Zeros
+      config: {}
+      module: keras.initializers
+      registered_name: null
+    bias_regularizer: null
+    dtype: float32
+    kernel_constraint: null
+    kernel_initializer:
+      class_name: GlorotUniform
+      config:
+        seed: null
+      module: keras.initializers
+      registered_name: null
+    kernel_regularizer: null
+    name: dense_29
+    trainable: true
+    units: 10
+    use_bias: true
+  module: keras.layers
+  registered_name: null
+name: sequential_18
+trainable: true
