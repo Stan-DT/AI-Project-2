@@ -1,2 +1,0 @@
-batch_size,epochs,optimizer,validation_loss,validation_accuracy
-32,10,adam,0.2873198390007019,0.9044166803359985
