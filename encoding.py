@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from tensorflow.keras.layers import Conv2D, Flatten
 
-
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
@@ -18,6 +17,8 @@ import yaml
 from tensorflow.keras.layers import Activation, Dense, Input
 from tensorflow.keras import backend as K
 from tensorflow.keras.layers import Reshape, Conv2DTranspose
+from sklearn.neighbors import NearestNeighbors
+
 
 
 
@@ -30,6 +31,9 @@ class Encoding:
         self.x_train = x_train
         self.x_val = None
         self.x_test = x_test
+
+        self.y_train = None
+        self.y_test = None
         
 
         self.x_train_original = x_train
@@ -48,6 +52,7 @@ class Encoding:
         self.decoder = None
         self.autoencoder = None
         self.history = None
+        self.encoded = None
 
         self.batch_sizes_list = None
         self.epochs_list = None
@@ -225,6 +230,55 @@ class Encoding:
             plt.subplot(1, 10, 2*i+2)
             plt.imshow(decoded_img, cmap='gray')
         plt.show()
+
+    def dump_to_yaml(self,file_name):
+        file_name = str(file_name)
+        with open(file_name, 'w') as file:
+            pyaml.dump(self.autoencoder.get_config(), file)
+
+    def load_config(self, h5_file,file_name):
+        with open(str(file_name), 'r') as yaml_file:
+            loaded_model_config = yaml.safe_load(yaml_file)
+
+        self.autoencoder = Model.from_config(loaded_model_config)
+
+        self.autoencoder.load_weights(str(h5_file))
+
+    def encode_predict(self):
+        self.encoded_x_train = self.autoencoder.predict(self.x_train)
+
+    def closest_samples(self,number, y_train, y_test):
+
+        self.y_train = y_train
+        self.y_test = y_test
+
+        random_index = np.random.randint(0, len(self.x_test))
+        random_sample = np.expand_dims(self.x_train[random_index], axis=0)
+        random_label = self.y_test[random_index]
+
+        encoded_random_sample = self.autoencoder.predict(random_sample)
+
+        encoded_x_train_reshaped = self.encoded_x_train.reshape(len(self.encoded_x_train), -1)
+        encoded_random_sample_reshaped = random_sample.reshape(len(encoded_random_sample), -1)
+
+        nn = NearestNeighbors(n_neighbors=number)
+        nn.fit(encoded_x_train_reshaped)
+        distances, indices = nn.kneighbors(encoded_random_sample_reshaped)
+
+        plt.figure(figsize=(10, 6))
+        plt.subplot(2, 6, 1)
+        plt.imshow(random_sample.reshape(28, 28), cmap='gray')
+        plt.title('Random Sample')
+        plt.text(0, 39, f'Label: {random_label}', color='red', fontsize=10, ha='left')
+
+        for i, index in enumerate(indices[0]):
+            plt.subplot(2, 6, i + 2)
+            plt.imshow(self.x_train[index].reshape(28, 28), cmap='gray')
+            plt.text(0, 39, f'Label: {self.y_train[index]}', color='red', fontsize=10, ha='left',va = 'bottom')
+
+        plt.tight_layout()
+        plt.show()
+
 
     
     

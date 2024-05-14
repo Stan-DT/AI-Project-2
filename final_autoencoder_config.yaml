@@ -1,0 +1,539 @@
+input_layers:
+  - - encoder_input
+    - 0
+    - 0
+
+layers:
+
+  - class_name: InputLayer
+    config:
+      batch_shape:
+        -
+        - 28
+        - 28
+        - 1
+      dtype: float32
+      name: encoder_input
+      sparse: no
+    inbound_nodes: []
+    module: keras.layers
+    name: encoder_input
+    registered_name:
+
+  - build_config:
+      input_shape:
+
+    class_name: Functional
+
+    config:
+
+      input_layers:
+        - - encoder_input
+          - 0
+          - 0
+
+      layers:
+
+        - class_name: InputLayer
+          config:
+            batch_shape:
+              -
+              - 28
+              - 28
+              - 1
+            dtype: float32
+            name: encoder_input
+            sparse: no
+          inbound_nodes: []
+          module: keras.layers
+          name: encoder_input
+          registered_name:
+
+        - build_config:
+            input_shape:
+              -
+              - 28
+              - 28
+              - 1
+
+          class_name: Conv2D
+
+          config:
+            activation: relu
+            activity_regularizer:
+            bias_constraint:
+            bias_initializer:
+              class_name: Zeros
+              config: {}
+              module: keras.initializers
+              registered_name:
+            bias_regularizer:
+            data_format: channels_last
+            dilation_rate:
+              - 1
+              - 1
+            dtype: float32
+            filters: 20
+            groups: 1
+            kernel_constraint:
+            kernel_initializer:
+              class_name: GlorotUniform
+              config:
+                seed:
+              module: keras.initializers
+              registered_name:
+            kernel_regularizer:
+            kernel_size:
+              - 3
+              - 3
+            name: conv2d
+            padding: same
+            strides:
+              - 2
+              - 2
+            trainable: yes
+            use_bias: yes
+
+          inbound_nodes:
+            - args:
+                - class_name: __keras_tensor__
+                  config:
+                    dtype: float32
+                    keras_history:
+                      - encoder_input
+                      - 0
+                      - 0
+                    shape:
+                      -
+                      - 28
+                      - 28
+                      - 1
+              kwargs: {}
+
+          module: keras.layers
+
+          name: conv2d
+
+          registered_name:
+
+        - build_config:
+            input_shape:
+              -
+              - 14
+              - 14
+              - 20
+          class_name: Flatten
+          config:
+            data_format: channels_last
+            dtype: float32
+            name: flatten
+            trainable: yes
+          inbound_nodes:
+            - args:
+                - class_name: __keras_tensor__
+                  config:
+                    dtype: float32
+                    keras_history:
+                      - conv2d
+                      - 0
+                      - 0
+                    shape:
+                      -
+                      - 14
+                      - 14
+                      - 20
+              kwargs: {}
+          module: keras.layers
+          name: flatten
+          registered_name:
+
+        - build_config:
+            input_shape:
+              -
+              - 3920
+
+          class_name: Dense
+
+          config:
+            activation: linear
+            bias_constraint:
+            bias_initializer:
+              class_name: Zeros
+              config: {}
+              module: keras.initializers
+              registered_name:
+            bias_regularizer:
+            dtype: float32
+            kernel_constraint:
+            kernel_initializer:
+              class_name: GlorotUniform
+              config:
+                seed:
+              module: keras.initializers
+              registered_name:
+            kernel_regularizer:
+            name: latent_vector
+            trainable: yes
+            units: 16
+            use_bias: yes
+
+          inbound_nodes:
+            - args:
+                - class_name: __keras_tensor__
+                  config:
+                    dtype: float32
+                    keras_history:
+                      - flatten
+                      - 0
+                      - 0
+                    shape:
+                      -
+                      - 3920
+              kwargs: {}
+
+          module: keras.layers
+
+          name: latent_vector
+
+          registered_name:
+
+      name: encoder
+
+      output_layers:
+        - - latent_vector
+          - 0
+          - 0
+
+      trainable: yes
+
+    inbound_nodes:
+      - args:
+          - class_name: __keras_tensor__
+            config:
+              dtype: float32
+              keras_history:
+                - encoder_input
+                - 0
+                - 0
+              shape:
+                -
+                - 28
+                - 28
+                - 1
+        kwargs:
+          mask:
+
+    module: keras.src.models.functional
+
+    name: encoder
+
+    registered_name: Functional
+
+  - build_config:
+      input_shape:
+
+    class_name: Functional
+
+    config:
+
+      input_layers:
+        - - decoder_input
+          - 0
+          - 0
+
+      layers:
+
+        - class_name: InputLayer
+          config:
+            batch_shape:
+              -
+              - 16
+            dtype: float32
+            name: decoder_input
+            sparse: no
+          inbound_nodes: []
+          module: keras.layers
+          name: decoder_input
+          registered_name:
+
+        - build_config:
+            input_shape:
+              -
+              - 16
+
+          class_name: Dense
+
+          config:
+            activation: linear
+            bias_constraint:
+            bias_initializer:
+              class_name: Zeros
+              config: {}
+              module: keras.initializers
+              registered_name:
+            bias_regularizer:
+            dtype: float32
+            kernel_constraint:
+            kernel_initializer:
+              class_name: GlorotUniform
+              config:
+                seed:
+              module: keras.initializers
+              registered_name:
+            kernel_regularizer:
+            name: dense
+            trainable: yes
+            units: 3920
+            use_bias: yes
+
+          inbound_nodes:
+            - args:
+                - class_name: __keras_tensor__
+                  config:
+                    dtype: float32
+                    keras_history:
+                      - decoder_input
+                      - 0
+                      - 0
+                    shape:
+                      -
+                      - 16
+              kwargs: {}
+
+          module: keras.layers
+
+          name: dense
+
+          registered_name:
+
+        - build_config:
+            input_shape:
+              -
+              - 3920
+          class_name: Reshape
+          config:
+            dtype: float32
+            name: reshape
+            target_shape:
+              - 14
+              - 14
+              - 20
+            trainable: yes
+          inbound_nodes:
+            - args:
+                - class_name: __keras_tensor__
+                  config:
+                    dtype: float32
+                    keras_history:
+                      - dense
+                      - 0
+                      - 0
+                    shape:
+                      -
+                      - 3920
+              kwargs: {}
+          module: keras.layers
+          name: reshape
+          registered_name:
+
+        - build_config:
+            input_shape:
+              -
+              - 14
+              - 14
+              - 20
+
+          class_name: Conv2DTranspose
+
+          config:
+            activation: relu
+            activity_regularizer:
+            bias_constraint:
+            bias_initializer:
+              class_name: Zeros
+              config: {}
+              module: keras.initializers
+              registered_name:
+            bias_regularizer:
+            data_format: channels_last
+            dilation_rate:
+              - 1
+              - 1
+            dtype: float32
+            filters: 20
+            kernel_constraint:
+            kernel_initializer:
+              class_name: GlorotUniform
+              config:
+                seed:
+              module: keras.initializers
+              registered_name:
+            kernel_regularizer:
+            kernel_size:
+              - 3
+              - 3
+            name: conv2d_transpose
+            padding: same
+            strides:
+              - 2
+              - 2
+            trainable: yes
+            use_bias: yes
+
+          inbound_nodes:
+            - args:
+                - class_name: __keras_tensor__
+                  config:
+                    dtype: float32
+                    keras_history:
+                      - reshape
+                      - 0
+                      - 0
+                    shape:
+                      -
+                      - 14
+                      - 14
+                      - 20
+              kwargs: {}
+
+          module: keras.layers
+
+          name: conv2d_transpose
+
+          registered_name:
+
+        - build_config:
+            input_shape:
+              -
+              - 28
+              - 28
+              - 20
+
+          class_name: Conv2DTranspose
+
+          config:
+            activation: linear
+            activity_regularizer:
+            bias_constraint:
+            bias_initializer:
+              class_name: Zeros
+              config: {}
+              module: keras.initializers
+              registered_name:
+            bias_regularizer:
+            data_format: channels_last
+            dilation_rate:
+              - 1
+              - 1
+            dtype: float32
+            filters: 1
+            kernel_constraint:
+            kernel_initializer:
+              class_name: GlorotUniform
+              config:
+                seed:
+              module: keras.initializers
+              registered_name:
+            kernel_regularizer:
+            kernel_size:
+              - 3
+              - 3
+            name: conv2d_transpose_1
+            padding: same
+            strides:
+              - 1
+              - 1
+            trainable: yes
+            use_bias: yes
+
+          inbound_nodes:
+            - args:
+                - class_name: __keras_tensor__
+                  config:
+                    dtype: float32
+                    keras_history:
+                      - conv2d_transpose
+                      - 0
+                      - 0
+                    shape:
+                      -
+                      - 28
+                      - 28
+                      - 20
+              kwargs: {}
+
+          module: keras.layers
+
+          name: conv2d_transpose_1
+
+          registered_name:
+
+        - build_config:
+            input_shape:
+              -
+              - 28
+              - 28
+              - 1
+          class_name: Activation
+          config:
+            activation: sigmoid
+            dtype: float32
+            name: decoder_output
+            trainable: yes
+          inbound_nodes:
+            - args:
+                - class_name: __keras_tensor__
+                  config:
+                    dtype: float32
+                    keras_history:
+                      - conv2d_transpose_1
+                      - 0
+                      - 0
+                    shape:
+                      -
+                      - 28
+                      - 28
+                      - 1
+              kwargs: {}
+          module: keras.layers
+          name: decoder_output
+          registered_name:
+
+      name: decoder
+
+      output_layers:
+        - - decoder_output
+          - 0
+          - 0
+
+      trainable: yes
+
+    inbound_nodes:
+      - args:
+          - class_name: __keras_tensor__
+            config:
+              dtype: float32
+              keras_history:
+                - encoder
+                - 0
+                - 0
+              shape:
+                -
+                - 16
+        kwargs:
+          mask:
+
+    module: keras.src.models.functional
+
+    name: decoder
+
+    registered_name: Functional
+
+name: autoencoder
+
+output_layers:
+  - - decoder
+    - 1
+    - 0
+
+trainable: yes

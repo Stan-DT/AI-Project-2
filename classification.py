@@ -231,4 +231,11 @@ class Classification:
         plt.tight_layout()
         plt.show()
 
+    def predict_test(self):
+        y_pred = np.argmax(self.model.predict(self.x_test), axis=1)
+        return y_pred
+
+
+
+
 
