@@ -256,8 +256,8 @@ class Encoding:
     def encode_predict(self):
         self.encoded_x_train = self.encoder.predict(self.x_train)
 
-    def closest_samples(self,number, y_train, y_test):
-
+    def closest_samples(self, number, y_train, y_test):
+        
         self.y_train = y_train
         self.y_test = y_test
 
@@ -265,10 +265,12 @@ class Encoding:
         random_sample = np.expand_dims(self.x_train[random_index], axis=0)
         random_label = self.y_test[random_index]
 
+        # Encode the random sample
         encoded_random_sample = self.encoder.predict(random_sample)
 
+        # Reshape encoded data to the correct shape
         encoded_x_train_reshaped = self.encoded_x_train.reshape(len(self.encoded_x_train), -1)
-        encoded_random_sample_reshaped = random_sample.reshape(len(encoded_random_sample), -1)
+        encoded_random_sample_reshaped = encoded_random_sample.reshape(1, -1)
 
         nn = NearestNeighbors(n_neighbors=number)
         nn.fit(encoded_x_train_reshaped)
@@ -283,10 +285,9 @@ class Encoding:
         for i, index in enumerate(indices[0]):
             plt.subplot(2, 6, i + 2)
             plt.imshow(self.x_train[index].reshape(28, 28), cmap='gray')
-            plt.text(0, 39, f'Label: {self.y_train[index]}', color='red', fontsize=10, ha='left',va = 'bottom')
+            plt.text(0, 39, f'Label: {self.y_train[index]}', color='red', fontsize=10, ha='left', va='bottom')
 
         plt.tight_layout()
-        plt.show()
 
 
     
