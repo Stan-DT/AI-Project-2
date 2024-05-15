@@ -1,16 +1,12 @@
 # Import necessary libraries
 import tensorflow as tf
 from tensorflow.keras.layers import Dense, Flatten, Reshape
-from tensorflow.keras.datasets import fashion_mnist
 from tensorflow.keras.models import Model
 import matplotlib.pyplot as plt
 import numpy as np
-from tensorflow.keras.layers import Conv2D, Flatten
+from tensorflow.keras.layers import Conv2D
 
-import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras import layers, models
 import pandas as pd
 import pyaml
 import yaml
@@ -135,7 +131,7 @@ class Encoding:
         self.autoencoder.summary()
 
     def compile_model(self,loss,optimizer):
-        self.autoencoder.compile(loss=loss, optimizer=optimizer)
+        self.encoder.compile(loss=loss, optimizer=optimizer)
 
     def train_model(self, epochs, batch_size):
         self.history = self.autoencoder.fit(self.x_train,
@@ -154,7 +150,13 @@ class Encoding:
         return self.autoencoder.evaluate(self.x_test, self.x_test, verbose=0)
     
     def save_model(self,file_name):
-        self.autoencoder.save_weights(str(file_name))
+        self.autoencoder.save_weights(file_name)
+
+    def save_encoder_and_dump_to_yaml(self,h5_file,yaml_file):
+        self.encoder.save_weights(h5_file)
+        with open(yaml_file, 'w') as file:
+            pyaml.dump(self.encoder.get_config(), file)
+
         
     def plot_training_and_validation_curves(self):
         plt.plot(self.history.history['loss'], label='Training Loss')
@@ -232,7 +234,6 @@ class Encoding:
         plt.show()
 
     def dump_to_yaml(self,file_name):
-        file_name = str(file_name)
         with open(file_name, 'w') as file:
             pyaml.dump(self.autoencoder.get_config(), file)
 
@@ -244,8 +245,16 @@ class Encoding:
 
         self.autoencoder.load_weights(str(h5_file))
 
+    def load_config_encoder(self, h5_file,file_name):
+        with open(str(file_name), 'r') as yaml_file:
+            loaded_model_config = yaml.safe_load(yaml_file)
+
+        self.encoder = Model.from_config(loaded_model_config)
+
+        self.encoder.load_weights(str(h5_file))
+
     def encode_predict(self):
-        self.encoded_x_train = self.autoencoder.predict(self.x_train)
+        self.encoded_x_train = self.encoder.predict(self.x_train)
 
     def closest_samples(self,number, y_train, y_test):
 
@@ -256,7 +265,7 @@ class Encoding:
         random_sample = np.expand_dims(self.x_train[random_index], axis=0)
         random_label = self.y_test[random_index]
 
-        encoded_random_sample = self.autoencoder.predict(random_sample)
+        encoded_random_sample = self.encoder.predict(random_sample)
 
         encoded_x_train_reshaped = self.encoded_x_train.reshape(len(self.encoded_x_train), -1)
         encoded_random_sample_reshaped = random_sample.reshape(len(encoded_random_sample), -1)

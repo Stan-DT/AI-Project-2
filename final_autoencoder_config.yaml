@@ -86,7 +86,7 @@ layers:
             kernel_size:
               - 3
               - 3
-            name: conv2d
+            name: conv2d_8
             padding: same
             strides:
               - 2
@@ -112,7 +112,7 @@ layers:
 
           module: keras.layers
 
-          name: conv2d
+          name: conv2d_8
 
           registered_name:
 
@@ -126,7 +126,7 @@ layers:
           config:
             data_format: channels_last
             dtype: float32
-            name: flatten
+            name: flatten_8
             trainable: yes
           inbound_nodes:
             - args:
@@ -134,7 +134,7 @@ layers:
                   config:
                     dtype: float32
                     keras_history:
-                      - conv2d
+                      - conv2d_8
                       - 0
                       - 0
                     shape:
@@ -144,7 +144,7 @@ layers:
                       - 20
               kwargs: {}
           module: keras.layers
-          name: flatten
+          name: flatten_8
           registered_name:
 
         - build_config:
@@ -183,7 +183,7 @@ layers:
                   config:
                     dtype: float32
                     keras_history:
-                      - flatten
+                      - flatten_8
                       - 0
                       - 0
                     shape:
@@ -281,7 +281,7 @@ layers:
               module: keras.initializers
               registered_name:
             kernel_regularizer:
-            name: dense
+            name: dense_8
             trainable: yes
             units: 3920
             use_bias: yes
@@ -302,7 +302,7 @@ layers:
 
           module: keras.layers
 
-          name: dense
+          name: dense_8
 
           registered_name:
 
@@ -313,7 +313,7 @@ layers:
           class_name: Reshape
           config:
             dtype: float32
-            name: reshape
+            name: reshape_8
             target_shape:
               - 14
               - 14
@@ -325,7 +325,7 @@ layers:
                   config:
                     dtype: float32
                     keras_history:
-                      - dense
+                      - dense_8
                       - 0
                       - 0
                     shape:
@@ -333,7 +333,7 @@ layers:
                       - 3920
               kwargs: {}
           module: keras.layers
-          name: reshape
+          name: reshape_8
           registered_name:
 
         - build_config:
@@ -372,7 +372,7 @@ layers:
             kernel_size:
               - 3
               - 3
-            name: conv2d_transpose
+            name: conv2d_transpose_16
             padding: same
             strides:
               - 2
@@ -386,7 +386,7 @@ layers:
                   config:
                     dtype: float32
                     keras_history:
-                      - reshape
+                      - reshape_8
                       - 0
                       - 0
                     shape:
@@ -398,7 +398,7 @@ layers:
 
           module: keras.layers
 
-          name: conv2d_transpose
+          name: conv2d_transpose_16
 
           registered_name:
 
@@ -438,7 +438,7 @@ layers:
             kernel_size:
               - 3
               - 3
-            name: conv2d_transpose_1
+            name: conv2d_transpose_17
             padding: same
             strides:
               - 1
@@ -452,7 +452,7 @@ layers:
                   config:
                     dtype: float32
                     keras_history:
-                      - conv2d_transpose
+                      - conv2d_transpose_16
                       - 0
                       - 0
                     shape:
@@ -464,7 +464,7 @@ layers:
 
           module: keras.layers
 
-          name: conv2d_transpose_1
+          name: conv2d_transpose_17
 
           registered_name:
 
@@ -486,7 +486,7 @@ layers:
                   config:
                     dtype: float32
                     keras_history:
-                      - conv2d_transpose_1
+                      - conv2d_transpose_17
                       - 0
                       - 0
                     shape:

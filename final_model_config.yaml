@@ -16,7 +16,7 @@ layers:
         - 28
         - 1
       dtype: float32
-      name: input_layer_2
+      name: input_layer_1
       sparse: no
     module: keras.layers
     registered_name:
@@ -58,7 +58,7 @@ layers:
       kernel_size:
         - 3
         - 3
-      name: conv2d_6
+      name: conv2d_3
       padding: valid
       strides:
         - 1
@@ -80,7 +80,7 @@ layers:
     config:
       data_format: channels_last
       dtype: float32
-      name: max_pooling2d_4
+      name: max_pooling2d_2
       padding: valid
       pool_size:
         - 2
@@ -129,7 +129,7 @@ layers:
       kernel_size:
         - 3
         - 3
-      name: conv2d_7
+      name: conv2d_4
       padding: valid
       strides:
         - 1
@@ -151,7 +151,7 @@ layers:
     config:
       data_format: channels_last
       dtype: float32
-      name: max_pooling2d_5
+      name: max_pooling2d_3
       padding: valid
       pool_size:
         - 2
@@ -200,7 +200,7 @@ layers:
       kernel_size:
         - 3
         - 3
-      name: conv2d_8
+      name: conv2d_5
       padding: valid
       strides:
         - 1
@@ -222,7 +222,7 @@ layers:
     config:
       data_format: channels_last
       dtype: float32
-      name: flatten_2
+      name: flatten_1
       trainable: yes
     module: keras.layers
     registered_name:
@@ -250,7 +250,7 @@ layers:
         module: keras.initializers
         registered_name:
       kernel_regularizer:
-      name: dense_4
+      name: dense_2
       trainable: yes
       units: 64
       use_bias: yes
@@ -280,13 +280,13 @@ layers:
         module: keras.initializers
         registered_name:
       kernel_regularizer:
-      name: dense_5
+      name: dense_3
       trainable: yes
       units: 10
       use_bias: yes
     module: keras.layers
     registered_name:
 
-name: sequential_2
+name: sequential_1
 
 trainable: yes

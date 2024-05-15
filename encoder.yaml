@@ -1,0 +1,178 @@
+input_layers:
+  - - encoder_input
+    - 0
+    - 0
+
+layers:
+
+  - class_name: InputLayer
+    config:
+      batch_shape:
+        -
+        - 28
+        - 28
+        - 1
+      dtype: float32
+      name: encoder_input
+      sparse: no
+    inbound_nodes: []
+    module: keras.layers
+    name: encoder_input
+    registered_name:
+
+  - build_config:
+      input_shape:
+        -
+        - 28
+        - 28
+        - 1
+
+    class_name: Conv2D
+
+    config:
+      activation: relu
+      activity_regularizer:
+      bias_constraint:
+      bias_initializer:
+        class_name: Zeros
+        config: {}
+        module: keras.initializers
+        registered_name:
+      bias_regularizer:
+      data_format: channels_last
+      dilation_rate:
+        - 1
+        - 1
+      dtype: float32
+      filters: 20
+      groups: 1
+      kernel_constraint:
+      kernel_initializer:
+        class_name: GlorotUniform
+        config:
+          seed:
+        module: keras.initializers
+        registered_name:
+      kernel_regularizer:
+      kernel_size:
+        - 3
+        - 3
+      name: conv2d_8
+      padding: same
+      strides:
+        - 2
+        - 2
+      trainable: yes
+      use_bias: yes
+
+    inbound_nodes:
+      - args:
+          - class_name: __keras_tensor__
+            config:
+              dtype: float32
+              keras_history:
+                - encoder_input
+                - 0
+                - 0
+              shape:
+                -
+                - 28
+                - 28
+                - 1
+        kwargs: {}
+
+    module: keras.layers
+
+    name: conv2d_8
+
+    registered_name:
+
+  - build_config:
+      input_shape:
+        -
+        - 14
+        - 14
+        - 20
+    class_name: Flatten
+    config:
+      data_format: channels_last
+      dtype: float32
+      name: flatten_8
+      trainable: yes
+    inbound_nodes:
+      - args:
+          - class_name: __keras_tensor__
+            config:
+              dtype: float32
+              keras_history:
+                - conv2d_8
+                - 0
+                - 0
+              shape:
+                -
+                - 14
+                - 14
+                - 20
+        kwargs: {}
+    module: keras.layers
+    name: flatten_8
+    registered_name:
+
+  - build_config:
+      input_shape:
+        -
+        - 3920
+
+    class_name: Dense
+
+    config:
+      activation: linear
+      bias_constraint:
+      bias_initializer:
+        class_name: Zeros
+        config: {}
+        module: keras.initializers
+        registered_name:
+      bias_regularizer:
+      dtype: float32
+      kernel_constraint:
+      kernel_initializer:
+        class_name: GlorotUniform
+        config:
+          seed:
+        module: keras.initializers
+        registered_name:
+      kernel_regularizer:
+      name: latent_vector
+      trainable: yes
+      units: 16
+      use_bias: yes
+
+    inbound_nodes:
+      - args:
+          - class_name: __keras_tensor__
+            config:
+              dtype: float32
+              keras_history:
+                - flatten_8
+                - 0
+                - 0
+              shape:
+                -
+                - 3920
+        kwargs: {}
+
+    module: keras.layers
+
+    name: latent_vector
+
+    registered_name:
+
+name: encoder
+
+output_layers:
+  - - latent_vector
+    - 0
+    - 0
+
+trainable: yes
